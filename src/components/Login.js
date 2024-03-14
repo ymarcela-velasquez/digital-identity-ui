@@ -1,20 +1,30 @@
 import React from 'react'
-import '../App.css'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import '../App.css'
 
 export const Login = ({ setUser }) => {
-  const [document, setDocument] = useState('')
+  const [identification, setIdentification] = useState('')
   const [email, setEmail] = useState('')
   const [error, setError] = useState(false)
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (document === '' || email === '') {
-      setError(true)
-      return
-    }    
-    setError(false)
-    setUser([document])
+    try {
+      if (identification === '' || email === '') {
+        setError(true)
+        return
+      }    
+      setUser([identification])
+      navigate.push('/home')
+
+      
+    } catch (error) {
+      console.log('error en login');
+      setError(false)
+      
+    }
   }
   return (
     <section>
@@ -25,8 +35,8 @@ export const Login = ({ setUser }) => {
       >
         <input 
           type='text'
-          value={document} 
-          onChange={event => setDocument(event.target.value)}
+          value={identification} 
+          onChange={event => setIdentification(event.target.value)}
           placeholder='Documento de identidad'
         />
         <input 
